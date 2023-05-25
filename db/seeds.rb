@@ -10,16 +10,17 @@
 require 'open-uri'
 require 'json'
 
-url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200' \
+url = 'https://tmdb.lewagon.com/movie/top_rated'
 response = URI.open(url)
 movies_data = JSON.parse(response.read)
+relevant_infos = movies_data['results']
 
-movies_data.each do |movie_data|
+relevant_infos.each do |movie_data|
   movie = Movie.new(
-    title: movie_data['title'],
+    title: movie_data["original_title"],
     overview: movie_data['overview'],
-    rating: moview_data['rating'],
-    poster_url: movie_data['image_url']
+    rating: movie_data["vote_average"],
+    poster_url: movie_data["poster_path"]
   )
   movie.save!
 end
