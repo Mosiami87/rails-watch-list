@@ -10,6 +10,11 @@
 require 'open-uri'
 require 'json'
 
+puts 'Cleaning database...'
+Bookmark.destroy_all
+Movie.destroy_all
+puts 'Creating movies...'
+
 url = 'https://tmdb.lewagon.com/movie/top_rated'
 response = URI.open(url)
 movies_data = JSON.parse(response.read)
